@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="tic-tac.js"></script>
+    <title>Tic-Tac.io</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="tic-tac.css">
+    
+</head>
+<body>
+    <div class="container">
+        <h1 id="turn">X's Turn</h1>
+        <table>
+          <tr>
+            <td id="0"></td>
+            <td id="1"></td>
+            <td id="2"></td>
+          </tr>
+          <tr>
+            <td id="3"></td>
+            <td id="4"></td>
+            <td id="5"></td>
+          </tr>
+          <tr>
+            <td id="6"></td>
+            <td id="7"></td>
+            <td id="8"></td>
+          </tr>
+        </table>
+        <button id="restart" class="btn btn-primary">Restart Game</button>
+        <div id="result" class="winner"></div>
+      </div>
+      <script> // JavaScript Code
+        let currentPlayer = 'X';
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        const winningCombinations = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+    
+        const cells = document.querySelectorAll('td');
+        const result = document.querySelector('#result');
+        const turn = document.querySelector('#turn');
+        const restart = document.querySelector('#restart');
+    
+        function handleCellClick(event) {
+          const cell = event.target;
+          const cellIndex = parseInt(cell.getAttribute('id'));
+          if (gameState[cellIndex] !== '' || result.textContent !== '') {
+            return;
+          }
+          cell.textContent = currentPlayer;
+          gameState[cellIndex] = currentPlayer;
+          checkWinner();
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+          turn.textContent = `${currentPlayer}'s Turn`;
+        }
+    
+        function checkWinner() {
+          for (let i = 0; i < winningCombinations.length; i++) {
+            const [a, b, c] = winningCombinations[i];
+            if (gameState[a] !== '' && gameState[a] === gameState[b] && gameState[b] === gameState[c]) {
+              result.textContent = `${gameState[a]} Wins!`;
+              return;
+            }
+          }
+          if (!gameState.includes('')) {
+            result.textContent = 'Draw!';
+          }
+        }
+    
+        function handleRestartClick() {
+          currentPlayer = 'X';
+          gameState = ['', '', '', '', '', '', '', '', ''];
+          cells.forEach(cell => cell.textContent = '');
+          result.textContent = '';
+          turn.textContent = `${currentPlayer}'s Turn`;
+        }
+    
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        restart.addEventListener('click', handleRestartClick);
+ </script>    
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
