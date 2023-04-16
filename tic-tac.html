@@ -11,8 +11,8 @@
     
 </head>
 <body>
-    <div class="container">
-        <h1 id="turn">X's Turn</h1>
+    <div class="container"> <!--This creates the 3x3 playing grid-->
+        <h1 id="turn">X's Turn</h1> <!--The header displaying whos turn it is-->
         <table>
           <tr>
             <td id="0"></td>
@@ -30,12 +30,13 @@
             <td id="8"></td>
           </tr>
         </table>
-        <button id="restart" class="btn btn-primary">Restart Game</button>
+        <button id="restart" class="btn btn-primary">Restart Game</button> <!--A button which will handle the restart function, connected to an event listener-->
         <div id="result" class="winner"></div>
-      </div>
-      <script> // JavaScript Code
-        let currentPlayer = 'X';
-        let gameState = ['', '', '', '', '', '', '', '', ''];
+      </div> 
+      <script> // JavaScript code
+        let currentPlayer = 'X'; //keeps track of turns, defaults to X
+        let gameState = ['', '', '', '', '', '', '', '', '']; /*keeps track of gameboard, each element corresponds to a cell and 
+        
         const winningCombinations = [
           [0, 1, 2],
           [3, 4, 5],
